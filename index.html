@@ -1,0 +1,2780 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro Información de Subsidios y Contribuciones | Grupo EPM</title>
+  <style>
+    :root {
+      --bg: #f3f6f8;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --ink: #17202a;
+      --muted: #667085;
+      --line: #d8dee7;
+      --primary: #006b54;
+      --primary-2: #008d71;
+      --primary-soft: #e8f5f1;
+      --navy: #17324d;
+      --navy-2: #244864;
+      --blue: #1976a9;
+      --danger: #b42318;
+      --success: #067647;
+      --warning: #b54708;
+      --shadow-sm: 0 5px 14px rgba(23, 32, 42, 0.06);
+      --shadow-md: 0 18px 42px rgba(23, 32, 42, 0.10);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(23, 50, 77, 0.04), rgba(0, 107, 84, 0.04)),
+        var(--bg);
+      min-height: 100vh;
+    }
+
+    .topbar {
+      min-height: 118px;
+      color: #ffffff;
+      background:
+        linear-gradient(135deg, rgba(23, 50, 77, 0.98), rgba(0, 107, 84, 0.96)),
+        radial-gradient(circle at 92% 18%, rgba(255, 255, 255, 0.20), transparent 32%);
+      border-bottom: 5px solid rgba(0, 141, 113, 0.95);
+    }
+
+    .topbar-inner {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 20px 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .brand-logo-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      flex: 0 0 auto;
+    }
+
+    .brand-logo-caption {
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 0.72rem;
+      line-height: 1;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      text-align: center;
+    }
+
+    .logo-epm {
+      width: 154px;
+      min-width: 154px;
+      height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-epm::before {
+      content: "";
+      position: absolute;
+      width: 86px;
+      height: 86px;
+      border-radius: 999px;
+      background: rgba(0, 141, 113, 0.10);
+      left: -22px;
+      bottom: -34px;
+    }
+
+    .logo-epm .logo-text {
+      position: relative;
+      font-weight: 900;
+      font-size: 1.75rem;
+      letter-spacing: -0.055em;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .logo-epm .logo-sub {
+      position: relative;
+      margin-left: 5px;
+      padding-left: 5px;
+      border-left: 1px solid #b7d5cc;
+      font-size: 0.64rem;
+      line-height: 1.08;
+      font-weight: 800;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .title-block { min-width: 0; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 7px;
+      padding: 5px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.10);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #59d3b0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.35rem, 2.8vw, 2.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      max-width: 760px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.94rem;
+      line-height: 1.45;
+    }
+
+    .nav-tabs {
+      width: min(1180px, calc(100% - 36px));
+      margin: 18px auto 18px;
+      display: flex;
+      gap: 8px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      border-radius: 11px;
+      padding: 10px 14px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      font-family: inherit;
+      transition: transform 0.12s, box-shadow 0.12s, background 0.12s, border-color 0.12s;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(23, 32, 42, 0.11);
+    }
+
+    .tab-btn {
+      border: 1px solid var(--line);
+      color: var(--navy);
+      background: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab-btn.active {
+      color: #ffffff;
+      background: var(--navy);
+      border-color: var(--navy);
+    }
+
+    main {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto 42px;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .capture-page {
+      max-width: 1010px;
+      margin: 0 auto;
+    }
+
+    .records-layout {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(300px, 0.34fr) minmax(0, 0.66fr);
+      align-items: start;
+    }
+
+    .records-side {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid rgba(216, 222, 231, 0.95);
+      box-shadow: var(--shadow-md);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 17px 20px;
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+    }
+
+    .card-header h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 1.04rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card-header span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.38;
+    }
+
+    .wizard-body {
+      padding: 20px;
+    }
+
+    .stepper {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .step {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      min-height: 52px;
+      padding: 10px 12px;
+      border: 1px solid #e1e7ef;
+      border-radius: 14px;
+      background: #ffffff;
+      color: var(--muted);
+    }
+
+    .step-number {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 900;
+      color: var(--navy);
+      background: #eef2f6;
+      flex: 0 0 auto;
+    }
+
+    .step strong {
+      display: block;
+      color: inherit;
+      font-size: 0.78rem;
+      line-height: 1.2;
+    }
+
+    .step small {
+      display: block;
+      font-size: 0.70rem;
+      line-height: 1.15;
+      color: inherit;
+    }
+
+    .step.active {
+      color: var(--primary);
+      border-color: #b7dcd2;
+      background: var(--primary-soft);
+    }
+
+    .step.active .step-number {
+      color: #ffffff;
+      background: var(--primary);
+    }
+
+    .step.done {
+      color: var(--navy);
+      background: #f8fafc;
+    }
+
+    .step.done .step-number {
+      color: #ffffff;
+      background: var(--navy);
+    }
+
+    .selection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .selection-card {
+      min-height: 88px;
+      text-align: left;
+      padding: 16px;
+      color: var(--navy);
+      background: #ffffff;
+      border: 1px solid #dfe6ee;
+      border-radius: 15px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .selection-card:hover {
+      border-color: #9acfc1;
+      background: #fbfefd;
+    }
+
+    .selection-card.selected {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      box-shadow: 0 0 0 3px rgba(0, 107, 84, 0.10);
+    }
+
+    .selection-card .card-title {
+      display: block;
+      font-size: 1.02rem;
+      letter-spacing: -0.01em;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .selection-card .card-desc {
+      display: block;
+      font-size: 0.76rem;
+      line-height: 1.35;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .company-card {
+      min-height: 72px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+      color: var(--navy);
+    }
+
+    .summary-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+      align-items: center;
+    }
+
+    .summary-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      padding: 7px 11px;
+      font-size: 0.76rem;
+      font-weight: 900;
+      color: var(--primary);
+      background: var(--primary-soft);
+      border: 1px solid #cfe7df;
+    }
+
+    .summary-chip.secondary {
+      color: var(--navy);
+      background: #eef2f6;
+      border-color: #dbe2ea;
+    }
+
+    form { padding: 20px; }
+
+    .form-section {
+      padding: 16px;
+      border: 1px solid #e4e9f0;
+      border-radius: 15px;
+      background: #ffffff;
+      margin-bottom: 15px;
+    }
+
+    .form-section-title {
+      margin: 0 0 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--navy);
+      font-size: 0.92rem;
+      font-weight: 900;
+      letter-spacing: 0.005em;
+    }
+
+    .form-section-title::before {
+      content: "";
+      width: 5px;
+      height: 18px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+
+    .field { grid-column: span 6; }
+    .field-third { grid-column: span 4; }
+    .field-full { grid-column: 1 / -1; }
+    .period-field { grid-column: span 3; }
+    .company-field { grid-column: span 6; }
+
+    label {
+      display: block;
+      font-weight: 800;
+      font-size: 0.80rem;
+      margin-bottom: 6px;
+      color: #344054;
+    }
+
+    select,
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid #cfd7e3;
+      border-radius: 10px;
+      padding: 9px 10px;
+      font-size: 0.90rem;
+      font-family: inherit;
+      background: #ffffff;
+      color: var(--ink);
+      outline: none;
+      min-height: 40px;
+      transition: border-color 0.16s, box-shadow 0.16s, background 0.16s;
+    }
+
+    select.compact { max-width: 170px; }
+
+    .readonly-value {
+      display: flex;
+      align-items: center;
+      min-height: 40px;
+      width: 100%;
+      border: 1px solid #dbe2ea;
+      border-radius: 10px;
+      padding: 9px 10px;
+      font-size: 0.90rem;
+      font-weight: 900;
+      color: var(--navy);
+      background: #f8fafc;
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 107, 84, 0.13);
+      background: #ffffff;
+    }
+
+    input::placeholder { color: #98a2b3; }
+
+    .hint {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.73rem;
+      line-height: 1.32;
+    }
+
+    .hidden { display: none !important; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 17px;
+    }
+
+    .btn-primary {
+      color: #ffffff;
+      background: var(--primary);
+    }
+
+    .btn-primary:hover { background: #005b48; }
+
+    .btn-light {
+      color: var(--primary);
+      background: var(--primary-soft);
+      border: 1px solid #cfe7df;
+    }
+
+    .btn-danger {
+      color: #ffffff;
+      background: #8f1d18;
+    }
+
+    .btn-secondary {
+      color: var(--navy);
+      background: #eef2f6;
+      border: 1px solid #dbe2ea;
+    }
+
+    .message {
+      margin-top: 14px;
+      padding: 11px 13px;
+      border-radius: 11px;
+      font-size: 0.86rem;
+      line-height: 1.35;
+      display: none;
+    }
+
+    .message.ok {
+      display: block;
+      color: var(--success);
+      background: #ecfdf3;
+      border: 1px solid #abefc6;
+    }
+
+    .message.error {
+      display: block;
+      color: #912018;
+      background: #fef3f2;
+      border: 1px solid #fecdca;
+    }
+
+    .message.warn {
+      display: block;
+      color: var(--warning);
+      background: #fffaeb;
+      border: 1px solid #fedf89;
+    }
+
+    .saved-summary {
+      margin: 16px 20px 20px;
+      padding: 16px;
+      border: 1px solid #cfe7df;
+      border-radius: 15px;
+      background: linear-gradient(180deg, #fbfefd, #f3fbf8);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .saved-summary-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: var(--navy);
+      font-weight: 900;
+      font-size: 0.95rem;
+    }
+
+    .saved-summary-title::before {
+      content: "✓";
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      background: var(--success);
+      font-size: 0.78rem;
+      margin-right: 8px;
+      flex: 0 0 auto;
+    }
+
+    .saved-summary-title span {
+      display: inline-flex;
+      align-items: center;
+      flex: 1;
+    }
+
+    .saved-summary-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: thin;
+    }
+
+    .saved-summary-item {
+      flex: 0 0 190px;
+      min-height: 74px;
+      padding: 10px;
+      border: 1px solid #e4e9f0;
+      border-radius: 11px;
+      background: #ffffff;
+    }
+
+    .saved-summary-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #475467;
+      font-size: 0.69rem;
+      line-height: 1.25;
+      text-transform: uppercase;
+      letter-spacing: 0.035em;
+    }
+
+    .saved-summary-item span {
+      display: block;
+      color: var(--navy);
+      font-size: 0.88rem;
+      font-weight: 800;
+      word-break: break-word;
+    }
+
+
+
+    .executive-page {
+      display: grid;
+      gap: 18px;
+    }
+
+    .filters-panel {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 12px;
+      padding: 18px 18px 0;
+      align-items: end;
+    }
+
+    .filter-field {
+      grid-column: span 3;
+    }
+
+    .filter-field select {
+      min-height: 92px;
+      padding: 7px 9px;
+      font-size: 0.84rem;
+    }
+
+    .filter-actions {
+      grid-column: span 3;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      padding-bottom: 18px;
+    }
+
+    .filter-hint {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.70rem;
+      line-height: 1.25;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .chart-panel {
+      padding: 18px;
+    }
+
+    .bar-chart-wrap {
+      overflow-x: auto;
+      overflow-y: hidden;
+      border: 1px solid #e4e9f0;
+      border-radius: 15px;
+      background: #ffffff;
+    }
+
+    .bar-chart-svg {
+      display: block;
+      min-width: 860px;
+      text-rendering: geometricPrecision;
+      shape-rendering: geometricPrecision;
+    }
+
+    .chart-axis-label {
+      fill: #4b5563;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .chart-value-label {
+      fill: #ffffff;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0.01em;
+      paint-order: stroke;
+      stroke: rgba(23, 50, 77, 0.72);
+      stroke-width: 3px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .chart-grid-line {
+      stroke: #edf1f5;
+      stroke-width: 1;
+    }
+
+    .chart-axis-line {
+      stroke: #cfd7e3;
+      stroke-width: 1;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .chart-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--navy);
+      font-size: 0.76rem;
+      font-weight: 850;
+    }
+
+    .chart-legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      padding: 18px;
+    }
+
+    .kpi-card {
+      min-height: 112px;
+      padding: 16px;
+      border: 1px solid #e4e9f0;
+      border-radius: 15px;
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .kpi-label {
+      display: block;
+      color: #667085;
+      font-size: 0.72rem;
+      line-height: 1.25;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.045em;
+    }
+
+    .kpi-value {
+      display: block;
+      margin-top: 10px;
+      color: var(--navy);
+      font-size: clamp(1.08rem, 2.1vw, 1.58rem);
+      line-height: 1.08;
+      font-weight: 950;
+      letter-spacing: -0.035em;
+      word-break: break-word;
+    }
+
+    .kpi-note {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.74rem;
+      line-height: 1.25;
+      font-weight: 650;
+    }
+
+    .executive-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 0.58fr) minmax(320px, 0.42fr);
+      align-items: start;
+    }
+
+    .chart-list {
+      display: grid;
+      gap: 13px;
+      padding: 18px;
+    }
+
+    .bar-row {
+      display: grid;
+      gap: 7px;
+    }
+
+    .bar-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--navy);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .bar-track {
+      width: 100%;
+      height: 11px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #eef2f6;
+      border: 1px solid #dbe2ea;
+    }
+
+    .bar-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--blue));
+      transition: width 0.25s ease;
+    }
+
+    .executive-table-wrap {
+      overflow: auto;
+      max-height: 420px;
+      border-top: 1px solid #edf1f5;
+    }
+
+    .executive-table {
+      min-width: 760px;
+    }
+
+    .executive-table.compact-table {
+      min-width: 980px;
+    }
+
+    .empty-state {
+      padding: 24px 18px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    .status-box { padding: 18px; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.74rem;
+      font-weight: 900;
+      background: var(--primary-soft);
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .status-box h3 {
+      margin: 0 0 8px;
+      font-size: 0.98rem;
+      color: var(--navy);
+    }
+
+    .status-box p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.84rem;
+    }
+
+    .mini-table-wrap {
+      overflow: auto;
+      max-height: 540px;
+      border-top: 1px solid #edf1f5;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1120px;
+      font-size: 0.79rem;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #edf1f5;
+      padding: 9px 8px;
+      text-align: left;
+      vertical-align: top;
+      white-space: nowrap;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #f8fafc;
+      color: #475467;
+      font-size: 0.70rem;
+      text-transform: uppercase;
+      letter-spacing: 0.035em;
+    }
+
+    td.empty {
+      color: #98a2b3;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .counter {
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .required { color: var(--danger); }
+
+    .footer-note {
+      padding: 13px 18px 16px;
+      color: var(--muted);
+      font-size: 0.79rem;
+      line-height: 1.4;
+      background: #f8fafc;
+      border-top: 1px solid #edf1f5;
+    }
+
+    @media (max-width: 980px) {
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .records-layout { grid-template-columns: 1fr; }
+      .executive-grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .selection-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .filters-panel { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      .filter-field, .filter-actions { grid-column: span 2; }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner,
+      .nav-tabs,
+      main {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .brand-block {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .logo-epm {
+        width: 138px;
+        min-width: 138px;
+        height: 58px;
+      }
+
+      .logo-epm .logo-text { font-size: 1.55rem; }
+
+      .stepper { grid-template-columns: 1fr; }
+      .selection-grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: 1fr; }
+
+      .field,
+      .field-third,
+      .period-field,
+      .company-field,
+      .filter-field,
+      .filter-actions {
+        grid-column: 1 / -1;
+      }
+
+      select.compact { max-width: 100%; }
+
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-block">
+        <div class="brand-logo-stack">
+          <div class="logo-epm" aria-label="Identidad Grupo EPM">
+            <span class="logo-text">epm</span>
+            <span class="logo-sub">Grupo<br />EPM</span>
+          </div>
+          <div class="brand-logo-caption">Filiales nacionales</div>
+        </div>
+        <div class="title-block">
+          <div class="eyebrow">Reporte Ejecutivo</div>
+          <h1>Registro de Información Subsidios y Contribuciones</h1>
+          <p class="subtitle">
+            Captura corporativa de saldos, resoluciones y pagos por empresa.
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="nav-tabs" aria-label="Navegación principal">
+    <button type="button" class="tab-btn active" data-page="capturaPage">Captura de información</button>
+    <button type="button" class="tab-btn" data-page="ejecutivaPage">Visualización ejecutiva</button>
+    <button type="button" class="tab-btn" data-page="registrosPage">Registros y descarga</button>
+  </nav>
+
+  <main>
+    <section id="capturaPage" class="page active">
+      <div class="capture-page">
+        <section class="card">
+          <div class="card-header">
+            <h2>Captura de información</h2>
+            <span>Primero seleccione la empresa y luego el tipo de registro que desea diligenciar.</span>
+          </div>
+
+          <div class="wizard-body">
+            <div class="stepper" aria-label="Pasos del formulario">
+              <div id="stepEmpresa" class="step active">
+                <span class="step-number">1</span>
+                <span><strong>Empresa</strong><small>Empresa y responsable</small></span>
+              </div>
+              <div id="stepTipo" class="step">
+                <span class="step-number">2</span>
+                <span><strong>Tipo de Registro</strong><small>Indique el tipo de registro</small></span>
+              </div>
+              <div id="stepRegistro" class="step">
+                <span class="step-number">3</span>
+                <span><strong>Diligenciamiento</strong><small>Complete datos</small></span>
+              </div>
+            </div>
+
+            <section id="empresaStepPanel">
+              <div class="summary-row">
+                <span class="summary-chip">Paso 1 de 3</span>
+                <span class="summary-chip secondary">Seleccione una empresa para continuar</span>
+              </div>
+
+              <div id="empresaGrid" class="selection-grid" aria-label="Empresas disponibles"></div>
+
+              <div id="responsablePosteriorBox" class="form-section hidden" style="margin-top: 15px;">
+                <p class="form-section-title">Responsable del registro</p>
+                <div class="summary-row">
+                  <span class="summary-chip secondary">Empresa seleccionada: <strong id="empresaSeleccionadaResponsable"></strong></span>
+                </div>
+                <div class="grid">
+                  <div class="field">
+                    <label for="nombreDiligenciador">Nombre de la persona que diligencia <span class="required">*</span></label>
+                    <input id="nombreDiligenciador" name="nombreDiligenciador" type="text" placeholder="Ejemplo: Juan Pérez" autocomplete="name" />
+                    <div class="hint">Este nombre quedará asociado a cada registro que se guarde.</div>
+                  </div>
+                </div>
+                <div class="actions">
+                  <button type="button" id="continuarEmpresaBtn" class="btn-primary">Continuar</button>
+                </div>
+              </div>
+
+              <div id="empresaMensaje" class="message"></div>
+            </section>
+
+            <section id="tipoStepPanel" class="hidden">
+              <div class="summary-row">
+                <span class="summary-chip">Paso 2 de 3</span>
+                <span class="summary-chip secondary">Empresa seleccionada: <strong id="empresaSeleccionadaTipo"></strong></span>
+              </div>
+
+              <div class="selection-grid" aria-label="Tipos de registro disponibles">
+                <button type="button" class="selection-card" data-action="saldos">
+                  <span class="card-title">Ingresar saldos subsidios y contribuciones</span>
+                  <span class="card-desc">Registra el saldo del periodo para la empresa seleccionada.</span>
+                </button>
+
+                <button type="button" class="selection-card" data-action="resolucion">
+                  <span class="card-title">Registrar resolución nueva</span>
+                  <span class="card-desc">Registra número, valor y fecha de una resolución expedida.</span>
+                </button>
+
+                <button type="button" class="selection-card" data-action="pago">
+                  <span class="card-title">Registrar pago de resolución registrada</span>
+                  <span class="card-desc">Registra el valor y la fecha de pago asociado a una resolución.</span>
+                </button>
+              </div>
+
+              <div class="actions">
+                <button type="button" id="cambiarEmpresaBtn" class="btn-light">Cambiar empresa</button>
+              </div>
+            </section>
+
+            <section id="registroStepPanel" class="hidden">
+              <div class="summary-row">
+                <span class="summary-chip">Paso 3 de 3</span>
+                <span class="summary-chip secondary">Empresa: <strong id="empresaSeleccionadaRegistro"></strong></span>
+                <span class="summary-chip secondary">Tipo: <strong id="tipoRegistroTexto"></strong></span>
+              </div>
+
+              <form id="subsidiosForm">
+                <section class="form-section">
+                  <p class="form-section-title">Información general</p>
+                  <div class="grid">
+                    <div class="period-field">
+                      <label for="anio">Año <span class="required">*</span></label>
+                      <select id="anio" name="anio" class="compact" required></select>
+                    </div>
+
+                    <div class="period-field">
+                      <label for="mes">Mes <span class="required">*</span></label>
+                      <select id="mes" name="mes" class="compact" required></select>
+                    </div>
+
+                    <div class="company-field">
+                      <label>Empresa seleccionada</label>
+                      <div id="empresaReadonly" class="readonly-value"></div>
+                    </div>
+
+                    <div class="company-field">
+                      <label>Diligenciado por</label>
+                      <div id="nombreReadonly" class="readonly-value"></div>
+                    </div>
+                  </div>
+                </section>
+
+                <section id="saldoSection" class="form-section hidden">
+                  <p class="form-section-title">Saldo de subsidios y contribuciones</p>
+                  <div class="grid">
+                    <div class="field">
+                      <label for="saldo">Saldo Subsidios y Contribución <span class="required">*</span></label>
+                      <input
+                        id="saldo"
+                        name="saldo"
+                        type="text"
+                        inputmode="decimal"
+                        placeholder="Ejemplo: $ 251.120"
+                      />
+                      <div class="hint">Ingrese el valor en pesos. El campo se formatea automáticamente al salir.</div>
+                    </div>
+                  </div>
+
+                  <div id="saldoDuplicadoBox" class="message warn hidden"></div>
+                </section>
+
+                <section id="resolucionSection" class="form-section hidden">
+                  <p class="form-section-title">Información de la resolución</p>
+                  <div class="grid">
+                    <div class="field-third">
+                      <label for="numeroResolucion">Número de Resolución <span class="required">*</span></label>
+                      <input id="numeroResolucion" name="numeroResolucion" type="text" placeholder="Ejemplo: 2342354" />
+                    </div>
+
+                    <div class="field-third">
+                      <label for="valorResolucion">Valor en la Resolución <span class="required">*</span></label>
+                      <input
+                        id="valorResolucion"
+                        name="valorResolucion"
+                        type="text"
+                        inputmode="decimal"
+                        placeholder="Ejemplo: $ 1.222.334"
+                      />
+                      <div class="hint">Ingrese el valor en pesos. El campo se formatea automáticamente al salir.</div>
+                    </div>
+
+                    <div class="field-third">
+                      <label for="fechaResolucion">Fecha de Resolución <span class="required">*</span></label>
+                      <input id="fechaResolucion" name="fechaResolucion" type="date" />
+                    </div>
+                  </div>
+
+                  <div id="resolucionDuplicadaBox" class="message warn hidden"></div>
+                </section>
+
+                <section id="pagoSection" class="form-section hidden">
+                  <p class="form-section-title">Información del pago</p>
+                  <div class="grid">
+                    <div class="field-third">
+                      <label for="numeroResolucionPago">Número de Resolución registrada <span class="required">*</span></label>
+                      <input id="numeroResolucionPago" name="numeroResolucionPago" type="text" placeholder="Ejemplo: 2342354" list="resolucionesGuardadas" />
+                      <datalist id="resolucionesGuardadas"></datalist>
+                      <div class="hint">Puede digitar el número o seleccionar una resolución registrada previamente en este navegador.</div>
+                    </div>
+
+                    <div class="field-third">
+                      <label for="valorPago">Valor del Pago <span class="required">*</span></label>
+                      <input
+                        id="valorPago"
+                        name="valorPago"
+                        type="text"
+                        inputmode="decimal"
+                        placeholder="Ejemplo: $ 1.222.334"
+                      />
+                      <div class="hint">Ingrese el valor en pesos. El campo se formatea automáticamente al salir.</div>
+                    </div>
+
+                    <div class="field-third">
+                      <label for="fechaPago">Fecha Ingreso Pago <span class="required">*</span></label>
+                      <input id="fechaPago" name="fechaPago" type="date" />
+                    </div>
+                  </div>
+                </section>
+
+                <div class="actions">
+                  <button type="submit" class="btn-primary">Guardar registro</button>
+                  <button type="button" id="volverTipoBtn" class="btn-light">Volver a opciones de registro</button>
+                  <button type="button" id="reiniciarFlujoBtn" class="btn-secondary">Cambiar empresa</button>
+                  <button type="button" id="verRegistrosBtn" class="btn-secondary">Ver registros</button>
+                </div>
+
+                <div id="mensaje" class="message"></div>
+
+                <section id="registroGuardadoBox" class="saved-summary hidden" aria-live="polite">
+                  <div class="saved-summary-title"><span>Información registrada</span></div>
+                  <div id="registroGuardadoDetalle" class="saved-summary-grid"></div>
+                </section>
+              </form>
+            </section>
+          </div>
+        </section>
+      </div>
+    </section>
+
+
+    <section id="ejecutivaPage" class="page">
+      <div class="executive-page">
+        <section class="card">
+          <div class="card-header">
+            <h2>Visualización ejecutiva</h2>
+            <span>Resumen automático con base en la información registrada desde este navegador. Los filtros aplican sobre KPIs, tablas y gráficos.</span>
+          </div>
+
+          <div class="filters-panel" aria-label="Filtros de visualización ejecutiva">
+            <div class="filter-field">
+              <label for="filtroEmpresas">Empresas</label>
+              <select id="filtroEmpresas" multiple></select>
+              <div class="filter-hint">Deje sin selección para ver todas.</div>
+            </div>
+            <div class="filter-field">
+              <label for="filtroAnios">Años</label>
+              <select id="filtroAnios" multiple></select>
+              <div class="filter-hint">Puede seleccionar uno o varios años.</div>
+            </div>
+            <div class="filter-field">
+              <label for="filtroMeses">Meses</label>
+              <select id="filtroMeses" multiple></select>
+              <div class="filter-hint">Puede seleccionar uno o varios meses.</div>
+            </div>
+            <div class="filter-actions">
+              <button type="button" id="limpiarFiltrosEjecutivosBtn" class="btn-light">Limpiar filtros</button>
+            </div>
+          </div>
+
+          <div class="kpi-grid" aria-label="Indicadores ejecutivos">
+            <article class="kpi-card">
+              <span class="kpi-label">Saldo acumulado</span>
+              <span id="kpiValorSaldos" class="kpi-value">$ 0</span>
+              <span id="kpiSaldosNota" class="kpi-note">0 saldos registrados</span>
+            </article>
+
+            <article class="kpi-card">
+              <span class="kpi-label">Valor en resoluciones</span>
+              <span id="kpiValorResoluciones" class="kpi-value">$ 0</span>
+              <span id="kpiResolucionesNota" class="kpi-note">0 resoluciones registradas</span>
+            </article>
+
+            <article class="kpi-card">
+              <span class="kpi-label">Valor pagado</span>
+              <span id="kpiValorPagos" class="kpi-value">$ 0</span>
+              <span id="kpiPagosNota" class="kpi-note">0 pagos registrados</span>
+            </article>
+
+            <article class="kpi-card">
+              <span class="kpi-label">Pendiente estimado</span>
+              <span id="kpiPendiente" class="kpi-value">$ 0</span>
+              <span class="kpi-note">Saldo menos pagos</span>
+            </article>
+          </div>
+        </section>
+
+        <div class="charts-grid">
+          <section class="card">
+            <div class="card-header">
+              <h2>Registro mensual de saldos por empresa</h2>
+              <span>Comparativo mensual de saldos de subsidios y contribuciones.</span>
+            </div>
+            <div id="graficoLineasSaldos" class="chart-panel"></div>
+          </section>
+
+          <section class="card">
+            <div class="card-header">
+              <h2>Registro mensual de resoluciones por empresa</h2>
+              <span>Comparativo mensual del valor registrado en resoluciones.</span>
+            </div>
+            <div id="graficoLineasResoluciones" class="chart-panel"></div>
+          </section>
+
+          <section class="card">
+            <div class="card-header">
+              <h2>Registro mensual de pagos por empresa</h2>
+              <span>Comparativo mensual de pagos de resoluciones registradas.</span>
+            </div>
+            <div id="graficoLineasPagos" class="chart-panel"></div>
+          </section>
+        </div>
+
+        <div class="executive-grid">
+          <section class="card">
+            <div class="card-header">
+              <h2>Resumen por empresa</h2>
+              <span>Saldos, resoluciones y pagos acumulados por empresa.</span>
+            </div>
+            <div class="executive-table-wrap">
+              <table class="executive-table">
+                <thead>
+                  <tr>
+                    <th>Empresa</th>
+                    <th>Registros</th>
+                    <th>Saldo Subsidios y Contribución</th>
+                    <th>Valor en Resoluciones</th>
+                    <th>Valor Pagado</th>
+                    <th>Pendiente</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaResumenEmpresas">
+                  <tr><td class="empty" colspan="6">Aún no hay información registrada.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-header">
+              <h2>Composición del registro</h2>
+              <span>Cantidad de registros por tipo de información.</span>
+            </div>
+            <div id="graficoTiposRegistro" class="chart-list">
+              <div class="empty-state">Aún no hay información para visualizar.</div>
+            </div>
+          </section>
+        </div>
+
+        <section class="card">
+          <div class="card-header">
+            <h2>Últimos registros</h2>
+            <span>Vista ejecutiva de los últimos movimientos ingresados.</span>
+          </div>
+          <div class="executive-table-wrap">
+            <table class="executive-table compact-table">
+              <thead>
+                <tr>
+                  <th>Fecha de registro</th>
+                  <th>Tipo de Registro</th>
+                  <th>Año</th>
+                  <th>Mes</th>
+                  <th>Empresa</th>
+                  <th>Diligenciado por</th>
+                  <th># Resolución</th>
+                  <th>Valor Resolución</th>
+                  <th>Valor Pago</th>
+                  <th>Fecha Pago</th>
+                </tr>
+              </thead>
+              <tbody id="tablaUltimosEjecutiva">
+                <tr><td class="empty" colspan="10">Aún no hay información registrada.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="registrosPage" class="page">
+      <div class="records-layout">
+        <aside class="records-side">
+          <section class="card status-box">
+            <div class="pill">Acciones</div>
+            <h3>Descarga de información</h3>
+            <p>Consulta los registros cargados desde Google Sheets y descarga una copia en formato CSV, compatible con Excel.</p>
+            <div class="actions">
+              <button type="button" id="actualizarCentralBtn" class="btn-secondary">Actualizar desde Google Sheets</button>
+              <button type="button" id="csvBtn" class="btn-primary">Descargar CSV</button>
+              <button type="button" id="volverCapturaBtn" class="btn-light">Nuevo registro</button>
+            </div>
+          </section>
+        </aside>
+
+        <section class="card">
+          <div class="card-header">
+            <h2>Vista previa de registros</h2>
+            <span>Últimos datos disponibles en la base central sincronizada.</span>
+          </div>
+
+          <div class="mini-table-wrap">
+            <table>
+              <thead>
+                <tr id="tablaHeaders"></tr>
+              </thead>
+              <tbody id="tablaRegistros">
+                <tr>
+                  <td class="empty" colspan="12">Aún no hay registros en esta sesión.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="footer-note">
+            Nota: si configura la URL del Apps Script en la constante <strong>APPS_SCRIPT_URL</strong>,
+            esta vista leerá los registros centralizados desde Google Sheets. Si no se configura, funcionará en modo local.
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /*
+      CONEXIÓN CON GOOGLE SHEETS:
+      1. Cree el Apps Script con el código que acompaña este HTML.
+      2. Despliegue el script como aplicación web.
+      3. Pegue aquí la URL terminada en /exec.
+      Ejemplo:
+      const APPS_SCRIPT_URL = "https://script.google.com/macros/s/XXXXX/exec";
+    */
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxuxmw_Naiz0oi6CfK1TYJkfaW43gSl9rPH_o90caGhJPlRKS109dIpC8ePTYOQaPBiOg/exec";
+
+    const ANIOS = [2025, 2026, 2027, 2028, 2029, 2030];
+
+    const MESES = [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre"
+    ];
+
+    const EMPRESAS = ["EPM", "AFINIA", "CENS", "ESSA", "CHEC", "EDEQ"];
+
+    const TIPOS = {
+      saldos: "Ingresar Saldos Subsidios y Contribuciones",
+      resolucion: "Registrar Resolución Nueva",
+      pago: "Registrar Pago de Resolución Registrada"
+    };
+
+    const HEADERS = [
+      "Fecha de registro",
+      "Tipo de Registro",
+      "Año",
+      "Mes",
+      "Empresa",
+      "Diligenciado por",
+      "Saldo Subsidios y Contribución",
+      "# de Resolución",
+      "Valor en la Resolución",
+      "Fecha Resolución",
+      "Valor del Pago",
+      "Fecha Ingreso Pago"
+    ];
+
+    const CAMPOS_PESO = ["Saldo Subsidios y Contribución", "Valor en la Resolución", "Valor del Pago"];
+
+    const STORAGE_KEY = "registrosSubsidiosV3";
+
+    const pages = document.querySelectorAll(".page");
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const empresaGrid = document.getElementById("empresaGrid");
+    const empresaStepPanel = document.getElementById("empresaStepPanel");
+    const tipoStepPanel = document.getElementById("tipoStepPanel");
+    const registroStepPanel = document.getElementById("registroStepPanel");
+    const stepEmpresa = document.getElementById("stepEmpresa");
+    const stepTipo = document.getElementById("stepTipo");
+    const stepRegistro = document.getElementById("stepRegistro");
+    const empresaSeleccionadaTipo = document.getElementById("empresaSeleccionadaTipo");
+    const empresaSeleccionadaRegistro = document.getElementById("empresaSeleccionadaRegistro");
+    const empresaSeleccionadaResponsable = document.getElementById("empresaSeleccionadaResponsable");
+    const empresaReadonly = document.getElementById("empresaReadonly");
+    const responsablePosteriorBox = document.getElementById("responsablePosteriorBox");
+    const nombreDiligenciadorInput = document.getElementById("nombreDiligenciador");
+    const nombreReadonly = document.getElementById("nombreReadonly");
+    const empresaMensaje = document.getElementById("empresaMensaje");
+    const tipoRegistroTexto = document.getElementById("tipoRegistroTexto");
+    const form = document.getElementById("subsidiosForm");
+    const anio = document.getElementById("anio");
+    const mes = document.getElementById("mes");
+    const saldoSection = document.getElementById("saldoSection");
+    const resolucionSection = document.getElementById("resolucionSection");
+    const pagoSection = document.getElementById("pagoSection");
+    const mensaje = document.getElementById("mensaje");
+    const registroGuardadoBox = document.getElementById("registroGuardadoBox");
+    const registroGuardadoDetalle = document.getElementById("registroGuardadoDetalle");
+    const tablaHeaders = document.getElementById("tablaHeaders");
+    const tablaRegistros = document.getElementById("tablaRegistros");
+    const kpiValorSaldos = document.getElementById("kpiValorSaldos");
+    const kpiSaldosNota = document.getElementById("kpiSaldosNota");
+    const kpiValorResoluciones = document.getElementById("kpiValorResoluciones");
+    const kpiResolucionesNota = document.getElementById("kpiResolucionesNota");
+    const kpiValorPagos = document.getElementById("kpiValorPagos");
+    const kpiPagosNota = document.getElementById("kpiPagosNota");
+    const kpiPendiente = document.getElementById("kpiPendiente");
+    const tablaResumenEmpresas = document.getElementById("tablaResumenEmpresas");
+    const graficoTiposRegistro = document.getElementById("graficoTiposRegistro");
+    const tablaUltimosEjecutiva = document.getElementById("tablaUltimosEjecutiva");
+    const filtroEmpresas = document.getElementById("filtroEmpresas");
+    const filtroAnios = document.getElementById("filtroAnios");
+    const filtroMeses = document.getElementById("filtroMeses");
+    const graficoLineasSaldos = document.getElementById("graficoLineasSaldos");
+    const graficoLineasResoluciones = document.getElementById("graficoLineasResoluciones");
+    const graficoLineasPagos = document.getElementById("graficoLineasPagos");
+    const resolucionesGuardadas = document.getElementById("resolucionesGuardadas");
+    const resolucionDuplicadaBox = document.getElementById("resolucionDuplicadaBox");
+    const saldoDuplicadoBox = document.getElementById("saldoDuplicadoBox");
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const actualizarCentralBtn = document.getElementById("actualizarCentralBtn");
+
+    let empresaSeleccionada = "";
+    let nombreDiligenciador = "";
+    let accionSeleccionada = "";
+    let indiceResolucionEnEdicion = -1;
+    let ultimaResolucionDetectada = "";
+    let indiceSaldoEnEdicion = -1;
+    let ultimaClaveSaldoDetectada = "";
+    let sincronizandoCentral = false;
+
+    const camposPorAccion = {
+      saldos: ["saldo"],
+      resolucion: ["numeroResolucion", "valorResolucion", "fechaResolucion"],
+      pago: ["numeroResolucionPago", "valorPago", "fechaPago"]
+    };
+
+    function cambiarPagina(pageId) {
+      if (pageId === "ejecutivaPage") {
+        pintarVisualEjecutiva();
+      }
+
+      pages.forEach(page => page.classList.toggle("active", page.id === pageId));
+      tabButtons.forEach(button => button.classList.toggle("active", button.dataset.page === pageId));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function setWizardStep(step) {
+      stepEmpresa.classList.toggle("active", step === 1);
+      stepEmpresa.classList.toggle("done", step > 1);
+      stepTipo.classList.toggle("active", step === 2);
+      stepTipo.classList.toggle("done", step > 2);
+      stepRegistro.classList.toggle("active", step === 3);
+      stepRegistro.classList.toggle("done", false);
+    }
+
+    function mostrarPanel(panel) {
+      empresaStepPanel.classList.toggle("hidden", panel !== "empresa");
+      tipoStepPanel.classList.toggle("hidden", panel !== "tipo");
+      registroStepPanel.classList.toggle("hidden", panel !== "registro");
+
+      if (panel === "empresa") setWizardStep(1);
+      if (panel === "tipo") setWizardStep(2);
+      if (panel === "registro") setWizardStep(3);
+    }
+
+    function cargarOpciones() {
+      llenarSelect(anio, ANIOS, "Año");
+      llenarSelect(mes, MESES, "Mes");
+
+      empresaGrid.innerHTML = EMPRESAS.map(empresa => `
+        <button type="button" class="selection-card company-card" data-company="${escapeHtml(empresa)}">
+          ${escapeHtml(empresa)}
+        </button>
+      `).join("");
+    }
+
+    function llenarSelect(select, opciones, textoInicial) {
+      select.innerHTML = `<option value="">${textoInicial}</option>`;
+      opciones.forEach(opcion => {
+        const opt = document.createElement("option");
+        opt.value = opcion;
+        opt.textContent = opcion;
+        select.appendChild(opt);
+      });
+    }
+
+    function seleccionarEmpresa(empresa) {
+      empresaSeleccionada = empresa;
+      empresaGrid.querySelectorAll("[data-company]").forEach(boton => {
+        boton.classList.toggle("selected", boton.dataset.company === empresa);
+      });
+      empresaSeleccionadaResponsable.textContent = empresa;
+      empresaSeleccionadaTipo.textContent = empresa;
+      empresaSeleccionadaRegistro.textContent = empresa;
+      empresaReadonly.textContent = empresa;
+      responsablePosteriorBox.classList.remove("hidden");
+      empresaMensaje.className = "message";
+      empresaMensaje.textContent = "";
+      ocultarResumenRegistro();
+      nombreDiligenciadorInput.focus();
+    }
+
+    function continuarConEmpresa() {
+      const nombre = nombreDiligenciadorInput.value.trim();
+
+      if (!empresaSeleccionada) {
+        empresaMensaje.className = "message error";
+        empresaMensaje.textContent = "Seleccione una empresa para continuar.";
+        return;
+      }
+
+      if (!nombre) {
+        empresaMensaje.className = "message error";
+        empresaMensaje.textContent = "Ingrese el nombre de la persona que diligencia para continuar.";
+        nombreDiligenciadorInput.focus();
+        return;
+      }
+
+      empresaMensaje.className = "message";
+      empresaMensaje.textContent = "";
+      nombreDiligenciador = nombre;
+      nombreReadonly.textContent = nombreDiligenciador;
+      cargarResolucionesGuardadas();
+      limpiarFormulario(false);
+      mostrarPanel("tipo");
+    }
+
+    function seleccionarAccion(accion) {
+      accionSeleccionada = accion;
+      tipoRegistroTexto.textContent = TIPOS[accion] || "";
+      configurarFormularioPorAccion();
+      limpiarFormulario(false);
+      mostrarPanel("registro");
+    }
+
+    function configurarFormularioPorAccion() {
+      saldoSection.classList.toggle("hidden", accionSeleccionada !== "saldos");
+      resolucionSection.classList.toggle("hidden", accionSeleccionada !== "resolucion");
+      pagoSection.classList.toggle("hidden", accionSeleccionada !== "pago");
+
+      if (accionSeleccionada !== "resolucion") {
+        indiceResolucionEnEdicion = -1;
+        ultimaResolucionDetectada = "";
+        resolucionDuplicadaBox.classList.add("hidden");
+        resolucionDuplicadaBox.textContent = "";
+        submitBtn.textContent = "Guardar registro";
+      }
+
+      if (accionSeleccionada !== "saldos") {
+        indiceSaldoEnEdicion = -1;
+        ultimaClaveSaldoDetectada = "";
+        saldoDuplicadoBox.classList.add("hidden");
+        saldoDuplicadoBox.textContent = "";
+        if (accionSeleccionada !== "resolucion") {
+          submitBtn.textContent = "Guardar registro";
+        }
+      }
+
+      Object.values(camposPorAccion).flat().forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.removeAttribute("required");
+      });
+
+      (camposPorAccion[accionSeleccionada] || []).forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.setAttribute("required", "required");
+      });
+    }
+
+    function volverTipo() {
+      accionSeleccionada = "";
+      limpiarFormulario(false);
+      mostrarPanel("tipo");
+    }
+
+    function reiniciarFlujo() {
+      empresaSeleccionada = "";
+      nombreDiligenciador = "";
+      accionSeleccionada = "";
+      nombreDiligenciadorInput.value = "";
+      responsablePosteriorBox.classList.add("hidden");
+      empresaSeleccionadaResponsable.textContent = "";
+      empresaGrid.querySelectorAll("[data-company]").forEach(boton => boton.classList.remove("selected"));
+      empresaMensaje.className = "message";
+      empresaMensaje.textContent = "";
+      limpiarFormulario(false);
+      mostrarPanel("empresa");
+    }
+
+    function convertirANumero(valor, nombreCampo = "Valor") {
+      if (valor === null || valor === undefined || String(valor).trim() === "") {
+        return null;
+      }
+
+      let limpio = String(valor)
+        .trim()
+        .replace(/COP/gi, "")
+        .replace(/\$/g, "")
+        .replace(/\s/g, "")
+        .replace(/[^0-9,.-]/g, "");
+
+      if (!limpio || limpio === "-" || limpio === "." || limpio === ",") {
+        throw new Error(`El campo "${nombreCampo}" debe ser numérico.`);
+      }
+
+      const ultimoPunto = limpio.lastIndexOf(".");
+      const ultimaComa = limpio.lastIndexOf(",");
+
+      if (ultimoPunto >= 0 && ultimaComa >= 0) {
+        const separadorDecimal = ultimoPunto > ultimaComa ? "." : ",";
+        const separadorMiles = separadorDecimal === "." ? "," : ".";
+        limpio = limpio.replace(new RegExp(`\\${separadorMiles}`, "g"), "");
+        limpio = limpio.replace(separadorDecimal, ".");
+      } else if (ultimaComa >= 0) {
+        const decimales = limpio.length - ultimaComa - 1;
+        limpio = decimales > 0 && decimales <= 2
+          ? limpio.replace(",", ".")
+          : limpio.replace(/,/g, "");
+      } else if (ultimoPunto >= 0) {
+        const puntos = (limpio.match(/\./g) || []).length;
+        const decimales = limpio.length - ultimoPunto - 1;
+        limpio = puntos === 1 && decimales > 0 && decimales <= 2
+          ? limpio
+          : limpio.replace(/\./g, "");
+      }
+
+      const numero = Number(limpio);
+
+      if (!Number.isFinite(numero)) {
+        throw new Error(`El campo "${nombreCampo}" debe ser numérico. Use ejemplos como 251120, 281196.40 o $ 1.222.334.`);
+      }
+
+      return numero;
+    }
+
+    function normalizarNumero(valor, nombreCampo) {
+      const numero = convertirANumero(valor, nombreCampo);
+      return numero === null ? "" : numero;
+    }
+
+    function formatearPesos(numero) {
+      const valor = Number(numero) || 0;
+      const tieneDecimales = Math.abs(valor % 1) > 0.000001;
+
+      return new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
+        minimumFractionDigits: tieneDecimales ? 2 : 0,
+        maximumFractionDigits: tieneDecimales ? 2 : 0
+      }).format(valor);
+    }
+
+    function normalizarPesos(valor, nombreCampo) {
+      const numero = convertirANumero(valor, nombreCampo);
+      return numero === null ? "" : formatearPesos(numero);
+    }
+
+    function formatearPesosDesdeEntrada(valor) {
+      const numero = convertirANumero(valor, "Valor");
+      return numero === null ? "" : formatearPesos(numero);
+    }
+
+    function numeroParaEdicion(valor) {
+      const numero = convertirANumero(valor, "Valor");
+      if (numero === null) return "";
+      return Number.isInteger(numero) ? String(numero) : String(numero).replace(".", ",");
+    }
+
+    function valorNumericoSeguro(valor) {
+      try {
+        const numero = convertirANumero(valor, "Valor");
+        return numero === null ? 0 : numero;
+      } catch (error) {
+        return 0;
+      }
+    }
+
+    function valorParaMostrar(header, valor) {
+      if (CAMPOS_PESO.includes(header) && String(valor ?? "").trim() !== "") {
+        return formatearPesos(valorNumericoSeguro(valor));
+      }
+
+      return valor ?? "";
+    }
+
+    function formatoFecha(fechaISO) {
+      if (!fechaISO) return "";
+      const [yyyy, mm, dd] = fechaISO.split("-");
+      return `${dd}/${mm}/${yyyy}`;
+    }
+
+    function fechaHoraRegistro() {
+      const fecha = new Date();
+      const dd = String(fecha.getDate()).padStart(2, "0");
+      const mm = String(fecha.getMonth() + 1).padStart(2, "0");
+      const yyyy = fecha.getFullYear();
+      const hh = String(fecha.getHours()).padStart(2, "0");
+      const min = String(fecha.getMinutes()).padStart(2, "0");
+      return `${dd}/${mm}/${yyyy} ${hh}:${min}`;
+    }
+
+    function fechaParaInput(fechaTexto) {
+      if (!fechaTexto) return "";
+
+      const partes = String(fechaTexto).split("/");
+      if (partes.length !== 3) return "";
+
+      const [dd, mm, yyyy] = partes;
+      return `${yyyy}-${mm.padStart(2, "0")}-${dd.padStart(2, "0")}`;
+    }
+
+    function normalizarResolucion(numero) {
+      return String(numero || "").trim().replace(/\s+/g, "").toUpperCase();
+    }
+
+    function buscarResolucionRegistrada(empresa, numeroResolucion) {
+      const numeroNormalizado = normalizarResolucion(numeroResolucion);
+
+      if (!empresa || !numeroNormalizado) {
+        return { indice: -1, registro: null };
+      }
+
+      const registros = obtenerRegistros();
+      const indice = registros.findIndex(registro =>
+        registro["Empresa"] === empresa &&
+        registro["Tipo de Registro"] === TIPOS.resolucion &&
+        normalizarResolucion(registro["# de Resolución"]) === numeroNormalizado
+      );
+
+      return {
+        indice,
+        registro: indice >= 0 ? registros[indice] : null
+      };
+    }
+
+    function claveSaldoPeriodo(empresa, anioValor, mesValor) {
+      return `${String(empresa || "").trim().toUpperCase()}|${String(anioValor || "").trim()}|${String(mesValor || "").trim().toUpperCase()}`;
+    }
+
+    function buscarSaldoRegistrado(empresa, anioValor, mesValor) {
+      if (!empresa || !anioValor || !mesValor) {
+        return { indice: -1, registro: null };
+      }
+
+      const claveBuscada = claveSaldoPeriodo(empresa, anioValor, mesValor);
+      const registros = obtenerRegistros();
+      const indice = registros.findIndex(registro =>
+        registro["Tipo de Registro"] === TIPOS.saldos &&
+        claveSaldoPeriodo(registro["Empresa"], registro["Año"], registro["Mes"]) === claveBuscada
+      );
+
+      return {
+        indice,
+        registro: indice >= 0 ? registros[indice] : null
+      };
+    }
+
+    function revisarSaldoDuplicado(autocompletar = true) {
+      if (accionSeleccionada !== "saldos") return;
+
+      const saldoInput = document.getElementById("saldo");
+      const resultado = buscarSaldoRegistrado(empresaSeleccionada, anio.value, mes.value);
+      indiceSaldoEnEdicion = resultado.indice;
+
+      if (resultado.registro) {
+        const claveActual = claveSaldoPeriodo(empresaSeleccionada, anio.value, mes.value);
+
+        if (autocompletar && claveActual !== ultimaClaveSaldoDetectada) {
+          saldoInput.value = resultado.registro["Saldo Subsidios y Contribución"] ? formatearPesosDesdeEntrada(resultado.registro["Saldo Subsidios y Contribución"]) : "";
+          ultimaClaveSaldoDetectada = claveActual;
+        }
+
+        saldoDuplicadoBox.classList.remove("hidden");
+        saldoDuplicadoBox.textContent = "Este mes ya tiene un saldo registrado para la empresa seleccionada. Puede modificar el saldo y guardar para actualizar el registro existente.";
+        submitBtn.textContent = "Actualizar saldo";
+      } else {
+        saldoDuplicadoBox.classList.add("hidden");
+        saldoDuplicadoBox.textContent = "";
+        submitBtn.textContent = "Guardar registro";
+        ultimaClaveSaldoDetectada = "";
+      }
+    }
+
+    function revisarResolucionDuplicada(autocompletar = false) {
+      if (accionSeleccionada !== "resolucion") return;
+
+      const numeroInput = document.getElementById("numeroResolucion");
+      const valorInput = document.getElementById("valorResolucion");
+      const fechaInput = document.getElementById("fechaResolucion");
+      const numero = numeroInput.value;
+      const resultado = buscarResolucionRegistrada(empresaSeleccionada, numero);
+
+      indiceResolucionEnEdicion = resultado.indice;
+
+      if (resultado.registro) {
+        const numeroNormalizado = normalizarResolucion(numero);
+
+        if (autocompletar && numeroNormalizado !== ultimaResolucionDetectada) {
+          valorInput.value = resultado.registro["Valor en la Resolución"] ? formatearPesosDesdeEntrada(resultado.registro["Valor en la Resolución"]) : "";
+          fechaInput.value = fechaParaInput(resultado.registro["Fecha Resolución"] || "");
+          ultimaResolucionDetectada = numeroNormalizado;
+        }
+
+        resolucionDuplicadaBox.classList.remove("hidden");
+        resolucionDuplicadaBox.textContent = "Esta resolución ya está registrada para la empresa seleccionada. Puede modificar el valor o la fecha y guardar para actualizar el registro existente.";
+        submitBtn.textContent = "Actualizar resolución";
+      } else {
+        resolucionDuplicadaBox.classList.add("hidden");
+        resolucionDuplicadaBox.textContent = "";
+        submitBtn.textContent = "Guardar registro";
+        ultimaResolucionDetectada = "";
+      }
+    }
+
+    function obtenerRegistros() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function guardarRegistros(registros) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(registros || []));
+    }
+
+    function guardarLocal(registro) {
+      const registros = obtenerRegistros();
+      registros.push(registro);
+      guardarRegistros(registros);
+    }
+
+    function actualizarLocal(indice, registro) {
+      const registros = obtenerRegistros();
+
+      if (indice < 0 || indice >= registros.length) {
+        throw new Error("No se encontró el registro para actualizar.");
+      }
+
+      registros[indice] = registro;
+      guardarRegistros(registros);
+    }
+
+    function centralConfigurado() {
+      return Boolean(String(APPS_SCRIPT_URL || "").trim());
+    }
+
+    function actualizarVistas() {
+      pintarTabla();
+      pintarVisualEjecutiva();
+      cargarResolucionesGuardadas();
+    }
+
+    function solicitudJsonp(parametros = {}, timeoutMs = 20000) {
+      return new Promise((resolve, reject) => {
+        if (!centralConfigurado()) {
+          resolve({ ok: false, mensaje: "Sin URL de Apps Script configurada" });
+          return;
+        }
+
+        let url;
+        try {
+          url = new URL(APPS_SCRIPT_URL);
+        } catch (error) {
+          reject(new Error("La URL de Apps Script no es válida. Debe terminar en /exec."));
+          return;
+        }
+
+        const callbackName = `gsCallback_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+        url.searchParams.set("callback", callbackName);
+        Object.entries(parametros).forEach(([clave, valor]) => {
+          if (valor !== undefined && valor !== null) {
+            url.searchParams.set(clave, String(valor));
+          }
+        });
+
+        const script = document.createElement("script");
+        let finalizado = false;
+
+        function limpiar() {
+          finalizado = true;
+          delete window[callbackName];
+          script.remove();
+          clearTimeout(timeoutId);
+        }
+
+        window[callbackName] = respuesta => {
+          limpiar();
+          resolve(respuesta || {});
+        };
+
+        script.onerror = () => {
+          if (finalizado) return;
+          limpiar();
+          reject(new Error("No fue posible conectarse con Google Sheets. Revise la URL y los permisos del Apps Script."));
+        };
+
+        const timeoutId = setTimeout(() => {
+          if (finalizado) return;
+          limpiar();
+          reject(new Error("La conexión con Google Sheets tardó demasiado. Intente de nuevo."));
+        }, timeoutMs);
+
+        script.src = url.toString();
+        document.body.appendChild(script);
+      });
+    }
+
+    async function sincronizarDesdeGoogleSheets(silencioso = false) {
+      if (!centralConfigurado() || sincronizandoCentral) return { sincronizado: false };
+
+      try {
+        sincronizandoCentral = true;
+        if (actualizarCentralBtn) actualizarCentralBtn.disabled = true;
+        const respuesta = await solicitudJsonp({ accion: "listar" });
+
+        if (!respuesta.ok) {
+          throw new Error(respuesta.mensaje || "No fue posible leer los datos de Google Sheets.");
+        }
+
+        const registros = Array.isArray(respuesta.registros) ? respuesta.registros : [];
+        guardarRegistros(registros);
+        actualizarVistas();
+
+        if (!silencioso) {
+          mostrarMensaje(`Información actualizada desde Google Sheets: ${registros.length} registro${registros.length === 1 ? "" : "s"}.`, "ok");
+        }
+
+        return { sincronizado: true, registros };
+      } catch (error) {
+        if (!silencioso) {
+          mostrarMensaje(error.message || "No fue posible actualizar desde Google Sheets.", "error");
+        }
+        return { sincronizado: false, error };
+      } finally {
+        sincronizandoCentral = false;
+        if (actualizarCentralBtn) actualizarCentralBtn.disabled = false;
+      }
+    }
+
+    async function enviarCentral(registro) {
+      if (!centralConfigurado()) return { enviado: false, motivo: "Sin URL de Apps Script configurada" };
+
+      const respuesta = await solicitudJsonp({
+        accion: "guardar",
+        payload: JSON.stringify(registro)
+      }, 25000);
+
+      if (!respuesta.ok) {
+        throw new Error(respuesta.mensaje || "No fue posible guardar en Google Sheets.");
+      }
+
+      if (Array.isArray(respuesta.registros)) {
+        guardarRegistros(respuesta.registros);
+        actualizarVistas();
+      }
+
+      return {
+        enviado: true,
+        operacion: respuesta.operacion || "guardar",
+        fila: respuesta.fila || ""
+      };
+    }
+
+    function construirRegistro() {
+      if (!empresaSeleccionada) {
+        throw new Error("Debe seleccionar una empresa antes de guardar.");
+      }
+
+      if (!accionSeleccionada) {
+        throw new Error("Debe seleccionar el tipo de registro que va a diligenciar.");
+      }
+
+      if (!nombreDiligenciador) {
+        throw new Error("Debe ingresar el nombre de la persona que diligencia la información.");
+      }
+
+      const registro = {
+        "Fecha de registro": fechaHoraRegistro(),
+        "Tipo de Registro": TIPOS[accionSeleccionada],
+        "Año": anio.value,
+        "Mes": mes.value,
+        "Empresa": empresaSeleccionada,
+        "Diligenciado por": nombreDiligenciador,
+        "Saldo Subsidios y Contribución": "",
+        "# de Resolución": "",
+        "Valor en la Resolución": "",
+        "Fecha Resolución": "",
+        "Valor del Pago": "",
+        "Fecha Ingreso Pago": ""
+      };
+
+      if (accionSeleccionada === "saldos") {
+        registro["Saldo Subsidios y Contribución"] = normalizarPesos(document.getElementById("saldo").value, "Saldo Subsidios y Contribución");
+      }
+
+      if (accionSeleccionada === "resolucion") {
+        registro["# de Resolución"] = document.getElementById("numeroResolucion").value.trim();
+        registro["Valor en la Resolución"] = normalizarPesos(document.getElementById("valorResolucion").value, "Valor en la Resolución");
+        registro["Fecha Resolución"] = formatoFecha(document.getElementById("fechaResolucion").value);
+      }
+
+      if (accionSeleccionada === "pago") {
+        registro["# de Resolución"] = document.getElementById("numeroResolucionPago").value.trim();
+        registro["Valor del Pago"] = normalizarPesos(document.getElementById("valorPago").value, "Valor del Pago");
+        registro["Fecha Ingreso Pago"] = formatoFecha(document.getElementById("fechaPago").value);
+      }
+
+      return registro;
+    }
+
+    function cargarResolucionesGuardadas() {
+      const registros = obtenerRegistros();
+      const valores = new Set();
+
+      registros.forEach(registro => {
+        if (registro["Empresa"] === empresaSeleccionada && registro["# de Resolución"]) {
+          valores.add(registro["# de Resolución"]);
+        }
+      });
+
+      resolucionesGuardadas.innerHTML = [...valores].sort().map(numero => `<option value="${escapeHtml(numero)}"></option>`).join("");
+    }
+
+
+    function obtenerResumenEjecutivo(registros) {
+      const resumenEmpresas = {};
+      EMPRESAS.forEach(empresa => {
+        resumenEmpresas[empresa] = {
+          empresa,
+          registros: 0,
+          saldo: 0,
+          resoluciones: 0,
+          pagos: 0,
+          pendiente: 0
+        };
+      });
+
+      const resumenTipos = {
+        [TIPOS.saldos]: 0,
+        [TIPOS.resolucion]: 0,
+        [TIPOS.pago]: 0
+      };
+
+      let totalSaldo = 0;
+      let totalResoluciones = 0;
+      let totalPagos = 0;
+      let cantidadSaldos = 0;
+      let cantidadResoluciones = 0;
+      let cantidadPagos = 0;
+
+      registros.forEach(registro => {
+        const empresa = registro["Empresa"] || "Sin empresa";
+        if (!resumenEmpresas[empresa]) {
+          resumenEmpresas[empresa] = {
+            empresa,
+            registros: 0,
+            saldo: 0,
+            resoluciones: 0,
+            pagos: 0,
+            pendiente: 0
+          };
+        }
+
+        const tipo = registro["Tipo de Registro"] || "Sin tipo";
+        resumenEmpresas[empresa].registros += 1;
+        resumenTipos[tipo] = (resumenTipos[tipo] || 0) + 1;
+
+        if (tipo === TIPOS.saldos) {
+          const valor = valorNumericoSeguro(registro["Saldo Subsidios y Contribución"]);
+          resumenEmpresas[empresa].saldo += valor;
+          totalSaldo += valor;
+          cantidadSaldos += 1;
+        }
+
+        if (tipo === TIPOS.resolucion) {
+          const valor = valorNumericoSeguro(registro["Valor en la Resolución"]);
+          resumenEmpresas[empresa].resoluciones += valor;
+          totalResoluciones += valor;
+          cantidadResoluciones += 1;
+        }
+
+        if (tipo === TIPOS.pago) {
+          const valor = valorNumericoSeguro(registro["Valor del Pago"]);
+          resumenEmpresas[empresa].pagos += valor;
+          totalPagos += valor;
+          cantidadPagos += 1;
+        }
+      });
+
+      Object.values(resumenEmpresas).forEach(item => {
+        item.pendiente = item.saldo - item.pagos;
+      });
+
+      return {
+        resumenEmpresas: Object.values(resumenEmpresas),
+        resumenTipos,
+        totalSaldo,
+        totalResoluciones,
+        totalPagos,
+        totalPendiente: totalSaldo - totalPagos,
+        cantidadSaldos,
+        cantidadResoluciones,
+        cantidadPagos
+      };
+    }
+
+    function obtenerValoresSeleccionados(select) {
+      if (!select) return [];
+      return Array.from(select.selectedOptions).map(option => String(option.value));
+    }
+
+    function cargarFiltrosEjecutivos() {
+      filtroEmpresas.innerHTML = EMPRESAS.map(empresa => `<option value="${escapeHtml(empresa)}">${escapeHtml(empresa)}</option>`).join("");
+      filtroAnios.innerHTML = ANIOS.map(anioValor => `<option value="${escapeHtml(anioValor)}">${escapeHtml(anioValor)}</option>`).join("");
+      filtroMeses.innerHTML = MESES.map(mesValor => `<option value="${escapeHtml(mesValor)}">${escapeHtml(mesValor)}</option>`).join("");
+    }
+
+    function limpiarFiltrosEjecutivos() {
+      [filtroEmpresas, filtroAnios, filtroMeses].forEach(select => {
+        Array.from(select.options).forEach(option => option.selected = false);
+      });
+      pintarVisualEjecutiva();
+    }
+
+    function filtrarRegistrosEjecutivos(registros) {
+      const empresas = obtenerValoresSeleccionados(filtroEmpresas);
+      const anios = obtenerValoresSeleccionados(filtroAnios);
+      const meses = obtenerValoresSeleccionados(filtroMeses);
+
+      return registros.filter(registro => {
+        const cumpleEmpresa = !empresas.length || empresas.includes(String(registro["Empresa"] || ""));
+        const cumpleAnio = !anios.length || anios.includes(String(registro["Año"] || ""));
+        const cumpleMes = !meses.length || meses.includes(String(registro["Mes"] || ""));
+        return cumpleEmpresa && cumpleAnio && cumpleMes;
+      });
+    }
+
+    function etiquetaPeriodo(anioValor, mesValor) {
+      const indice = MESES.indexOf(mesValor);
+      const mesCorto = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"][indice] || mesValor || "Sin mes";
+      return `${mesCorto} ${anioValor || ""}`.trim();
+    }
+
+    function ordenarPeriodos(a, b) {
+      const anioA = Number(a.anio) || 0;
+      const anioB = Number(b.anio) || 0;
+      const mesA = MESES.indexOf(a.mes);
+      const mesB = MESES.indexOf(b.mes);
+      return anioA - anioB || mesA - mesB;
+    }
+
+    function prepararDatosMensuales(registros, tipoRegistro, campoValor) {
+      const periodos = new Map();
+      const empresas = new Set();
+
+      registros
+        .filter(registro => registro["Tipo de Registro"] === tipoRegistro)
+        .forEach(registro => {
+          const empresa = registro["Empresa"] || "Sin empresa";
+          const anioValor = registro["Año"] || "";
+          const mesValor = registro["Mes"] || "";
+          const clavePeriodo = `${anioValor}|${mesValor}`;
+          const valor = valorNumericoSeguro(registro[campoValor]);
+
+          empresas.add(empresa);
+
+          if (!periodos.has(clavePeriodo)) {
+            periodos.set(clavePeriodo, {
+              anio: anioValor,
+              mes: mesValor,
+              periodo: etiquetaPeriodo(anioValor, mesValor),
+              valores: {}
+            });
+          }
+
+          const periodo = periodos.get(clavePeriodo);
+          periodo.valores[empresa] = (periodo.valores[empresa] || 0) + valor;
+        });
+
+      const periodosOrdenados = Array.from(periodos.values()).sort(ordenarPeriodos);
+      const empresasOrdenadas = Array.from(empresas).sort((a, b) => EMPRESAS.indexOf(a) - EMPRESAS.indexOf(b));
+
+      return { periodos: periodosOrdenados, empresas: empresasOrdenadas };
+    }
+
+    function formatoCompletoPesosGrafico(valor) {
+      const numero = Number(valor) || 0;
+      return formatearPesos(numero);
+    }
+
+    function renderizarGraficoBarras(contenedor, datos, tituloVacio) {
+      let { periodos, empresas } = datos;
+
+      if (!periodos.length || !empresas.length) {
+        contenedor.innerHTML = `<div class="empty-state">${escapeHtml(tituloVacio)}</div>`;
+        return;
+      }
+
+      const mesesSeleccionados = obtenerValoresSeleccionados(filtroMeses);
+      const ordenarValoresMayorAMenor = periodos.length === 1 || mesesSeleccionados.length === 1;
+
+      if (ordenarValoresMayorAMenor) {
+        const totalEmpresa = empresa => periodos.reduce((total, periodo) => total + (periodo.valores[empresa] || 0), 0);
+        empresas = [...empresas].sort((a, b) => {
+          const ordenValor = totalEmpresa(b) - totalEmpresa(a);
+          if (ordenValor !== 0) return ordenValor;
+          return EMPRESAS.indexOf(a) - EMPRESAS.indexOf(b);
+        });
+      } else {
+        empresas = [...empresas].sort((a, b) => EMPRESAS.indexOf(a) - EMPRESAS.indexOf(b));
+      }
+
+      const colores = ["#006b54", "#1976a9", "#17324d", "#b54708", "#5a2d82", "#667085", "#008d71", "#244864"];
+      const margen = { top: 52, right: 34, bottom: 76, left: 178 };
+      const anchoGrupo = Math.max(150, empresas.length * 34 + 56);
+      const ancho = Math.max(920, periodos.length * anchoGrupo + margen.left + margen.right);
+      const alto = 440;
+      const anchoGrafico = ancho - margen.left - margen.right;
+      const altoGrafico = alto - margen.top - margen.bottom;
+      const maxValor = Math.max(...periodos.flatMap(periodo => empresas.map(empresa => periodo.valores[empresa] || 0)), 1);
+      const maxEscala = maxValor * 1.28;
+      const y = valor => margen.top + altoGrafico - ((valor || 0) / maxEscala) * altoGrafico;
+      const ticks = [0, 0.25, 0.5, 0.75, 1].map(fraccion => maxEscala * fraccion);
+      const espacioPeriodo = anchoGrafico / periodos.length;
+      const anchoBarrasPeriodo = Math.min(espacioPeriodo * 0.78, empresas.length * 30 + 12);
+      const separacionBarra = 5;
+      const anchoBarra = Math.max(9, (anchoBarrasPeriodo - separacionBarra * (empresas.length - 1)) / empresas.length);
+      const saltoEtiqueta = Math.ceil(periodos.length / 10);
+
+      const grillas = ticks.map(valor => {
+        const yy = y(valor);
+        return `
+          <line x1="${margen.left}" y1="${yy}" x2="${ancho - margen.right}" y2="${yy}" class="chart-grid-line" />
+          <text x="${margen.left - 10}" y="${yy + 4}" text-anchor="end" class="chart-axis-label">${escapeHtml(formatoCompletoPesosGrafico(valor))}</text>
+        `;
+      }).join("");
+
+      const etiquetasX = periodos.map((periodo, indicePeriodo) => {
+        if (indicePeriodo % saltoEtiqueta !== 0 && indicePeriodo !== periodos.length - 1) return "";
+        const centroGrupo = margen.left + indicePeriodo * espacioPeriodo + espacioPeriodo / 2;
+        return `<text x="${centroGrupo}" y="${alto - 28}" text-anchor="middle" class="chart-axis-label">${escapeHtml(periodo.periodo)}</text>`;
+      }).join("");
+
+      const barras = periodos.map((periodo, indicePeriodo) => {
+        const inicioGrupo = margen.left + indicePeriodo * espacioPeriodo + (espacioPeriodo - anchoBarrasPeriodo) / 2;
+
+        return empresas.map((empresa, indiceEmpresa) => {
+          const valor = periodo.valores[empresa] || 0;
+          const color = colores[indiceEmpresa % colores.length];
+          const x = inicioGrupo + indiceEmpresa * (anchoBarra + separacionBarra);
+          const yy = y(valor);
+          const altura = Math.max(0, alto - margen.bottom - yy);
+          const alturaVisible = valor > 0 ? Math.max(2, altura) : 0;
+          const yVisible = valor > 0 ? (alto - margen.bottom - alturaVisible) : alto - margen.bottom;
+          const etiquetaX = x + anchoBarra / 2;
+          const etiquetaY = alto - margen.bottom - 12;
+          const textoEtiqueta = formatoCompletoPesosGrafico(valor);
+          const etiquetaValor = valor > 0
+            ? `<text x="${etiquetaX}" y="${etiquetaY}" text-anchor="start" dominant-baseline="middle" transform="rotate(-90 ${etiquetaX} ${etiquetaY})" class="chart-value-label">${escapeHtml(textoEtiqueta)}</text>`
+            : "";
+
+          return `
+            <rect x="${x}" y="${yVisible}" width="${anchoBarra}" height="${alturaVisible}" rx="4" fill="${color}">
+              <title>${escapeHtml(`${empresa} · ${periodo.periodo}: ${formatearPesos(valor)}`)}</title>
+            </rect>
+            ${etiquetaValor}
+          `;
+        }).join("");
+      }).join("");
+
+      const leyenda = empresas.map((empresa, indiceEmpresa) => {
+        const color = colores[indiceEmpresa % colores.length];
+        return `<span class="chart-legend-item"><span class="chart-legend-dot" style="background:${color}"></span>${escapeHtml(empresa)}</span>`;
+      }).join("");
+
+      contenedor.innerHTML = `
+        <div class="bar-chart-wrap">
+          <svg class="bar-chart-svg" width="${ancho}" height="${alto}" viewBox="0 0 ${ancho} ${alto}" role="img" aria-label="Gráfico de barras mensual por empresa" preserveAspectRatio="xMinYMin meet">
+            ${grillas}
+            <line x1="${margen.left}" y1="${margen.top}" x2="${margen.left}" y2="${alto - margen.bottom}" class="chart-axis-line" />
+            <line x1="${margen.left}" y1="${alto - margen.bottom}" x2="${ancho - margen.right}" y2="${alto - margen.bottom}" class="chart-axis-line" />
+            ${barras}
+            ${etiquetasX}
+          </svg>
+        </div>
+        <div class="chart-legend">${leyenda}</div>
+      `;
+    }
+
+    function pintarVisualEjecutiva() {
+      const registrosTotales = obtenerRegistros();
+      const registros = filtrarRegistrosEjecutivos(registrosTotales);
+      const resumen = obtenerResumenEjecutivo(registros);
+
+      kpiValorSaldos.textContent = formatearPesos(resumen.totalSaldo);
+      kpiValorResoluciones.textContent = formatearPesos(resumen.totalResoluciones);
+      kpiValorPagos.textContent = formatearPesos(resumen.totalPagos);
+      kpiPendiente.textContent = formatearPesos(resumen.totalPendiente);
+      kpiSaldosNota.textContent = `${resumen.cantidadSaldos} saldo${resumen.cantidadSaldos === 1 ? "" : "s"} registrado${resumen.cantidadSaldos === 1 ? "" : "s"}`;
+      kpiResolucionesNota.textContent = `${resumen.cantidadResoluciones} resolución${resumen.cantidadResoluciones === 1 ? "" : "es"} registrada${resumen.cantidadResoluciones === 1 ? "" : "s"}`;
+      kpiPagosNota.textContent = `${resumen.cantidadPagos} pago${resumen.cantidadPagos === 1 ? "" : "s"} registrado${resumen.cantidadPagos === 1 ? "" : "s"}`;
+
+      renderizarGraficoBarras(
+        graficoLineasSaldos,
+        prepararDatosMensuales(registros, TIPOS.saldos, "Saldo Subsidios y Contribución"),
+        "Aún no hay saldos para visualizar con los filtros seleccionados."
+      );
+
+      renderizarGraficoBarras(
+        graficoLineasResoluciones,
+        prepararDatosMensuales(registros, TIPOS.resolucion, "Valor en la Resolución"),
+        "Aún no hay resoluciones para visualizar con los filtros seleccionados."
+      );
+
+      renderizarGraficoBarras(
+        graficoLineasPagos,
+        prepararDatosMensuales(registros, TIPOS.pago, "Valor del Pago"),
+        "Aún no hay pagos para visualizar con los filtros seleccionados."
+      );
+
+      const empresasConDatos = resumen.resumenEmpresas.filter(item => item.registros > 0);
+
+      if (!empresasConDatos.length) {
+        tablaResumenEmpresas.innerHTML = `<tr><td class="empty" colspan="6">Aún no hay información registrada con los filtros seleccionados.</td></tr>`;
+      } else {
+        tablaResumenEmpresas.innerHTML = empresasConDatos
+          .sort((a, b) => b.registros - a.registros || a.empresa.localeCompare(b.empresa))
+          .map(item => `
+            <tr>
+              <td><strong>${escapeHtml(item.empresa)}</strong></td>
+              <td>${item.registros}</td>
+              <td>${escapeHtml(formatearPesos(item.saldo))}</td>
+              <td>${escapeHtml(formatearPesos(item.resoluciones))}</td>
+              <td>${escapeHtml(formatearPesos(item.pagos))}</td>
+              <td>${escapeHtml(formatearPesos(item.pendiente))}</td>
+            </tr>
+          `).join("");
+      }
+
+      const tipos = Object.entries(resumen.resumenTipos);
+      const maxTipo = Math.max(...tipos.map(([, cantidad]) => cantidad), 1);
+
+      if (!registros.length) {
+        graficoTiposRegistro.innerHTML = `<div class="empty-state">Aún no hay información para visualizar con los filtros seleccionados.</div>`;
+      } else {
+        graficoTiposRegistro.innerHTML = tipos.map(([tipo, cantidad]) => {
+          const ancho = Math.round((cantidad / maxTipo) * 100);
+          return `
+            <div class="bar-row">
+              <div class="bar-head">
+                <span>${escapeHtml(tipo)}</span>
+                <span>${cantidad}</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" style="width:${ancho}%"></div></div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      if (!registros.length) {
+        tablaUltimosEjecutiva.innerHTML = `<tr><td class="empty" colspan="10">Aún no hay información registrada con los filtros seleccionados.</td></tr>`;
+      } else {
+        tablaUltimosEjecutiva.innerHTML = registros.slice(-10).reverse().map(registro => `
+          <tr>
+            <td>${escapeHtml(registro["Fecha de registro"] || "")}</td>
+            <td>${escapeHtml(registro["Tipo de Registro"] || "")}</td>
+            <td>${escapeHtml(registro["Año"] || "")}</td>
+            <td>${escapeHtml(registro["Mes"] || "")}</td>
+            <td>${escapeHtml(registro["Empresa"] || "")}</td>
+            <td>${escapeHtml(registro["Diligenciado por"] || "")}</td>
+            <td>${escapeHtml(registro["# de Resolución"] || "")}</td>
+            <td>${escapeHtml(valorParaMostrar("Valor en la Resolución", registro["Valor en la Resolución"]))}</td>
+            <td>${escapeHtml(valorParaMostrar("Valor del Pago", registro["Valor del Pago"]))}</td>
+            <td>${escapeHtml(registro["Fecha Ingreso Pago"] || "")}</td>
+          </tr>
+        `).join("");
+      }
+    }
+
+    function configurarCampoPesos(id) {
+      const input = document.getElementById(id);
+      if (!input) return;
+
+      input.addEventListener("blur", () => {
+        if (!input.value.trim()) return;
+        try {
+          input.value = formatearPesosDesdeEntrada(input.value);
+        } catch (error) {
+          // La validación formal se realiza al guardar.
+        }
+      });
+
+      input.addEventListener("focus", () => {
+        if (!input.value.trim()) return;
+        try {
+          input.value = numeroParaEdicion(input.value);
+        } catch (error) {
+          // Si el valor no puede convertirse, se deja tal como está.
+        }
+      });
+    }
+
+    function pintarEncabezados() {
+      tablaHeaders.innerHTML = HEADERS.map(header => `<th>${escapeHtml(header)}</th>`).join("");
+    }
+
+    function pintarTabla() {
+      const registros = obtenerRegistros();
+
+      if (!registros.length) {
+        tablaRegistros.innerHTML = `<tr><td class="empty" colspan="${HEADERS.length}">Aún no hay registros en esta sesión.</td></tr>`;
+        return;
+      }
+
+      const ultimos = registros.slice(-15).reverse();
+
+      tablaRegistros.innerHTML = ultimos.map(registro => `
+        <tr>
+          ${HEADERS.map(header => `<td>${escapeHtml(valorParaMostrar(header, registro[header]))}</td>`).join("")}
+        </tr>
+      `).join("");
+    }
+
+    function escapeHtml(valor) {
+      return String(valor)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function mostrarMensaje(texto, tipo = "ok") {
+      mensaje.className = `message ${tipo}`;
+      mensaje.textContent = texto;
+    }
+
+    function mostrarResumenRegistro(registro) {
+      const camposVisibles = HEADERS.filter(header => {
+        const valor = registro[header];
+        return valor !== null && valor !== undefined && String(valor).trim() !== "";
+      });
+
+      registroGuardadoDetalle.innerHTML = camposVisibles.map(header => `
+        <div class="saved-summary-item">
+          <strong>${escapeHtml(header)}</strong>
+          <span>${escapeHtml(valorParaMostrar(header, registro[header]))}</span>
+        </div>
+      `).join("");
+
+      registroGuardadoBox.classList.remove("hidden");
+    }
+
+    function ocultarResumenRegistro() {
+      registroGuardadoDetalle.innerHTML = "";
+      registroGuardadoBox.classList.add("hidden");
+    }
+
+    function limpiarFormulario(limpiarMensaje = true, limpiarResumen = true) {
+      form.reset();
+      configurarFormularioPorAccion();
+      indiceResolucionEnEdicion = -1;
+      ultimaResolucionDetectada = "";
+      indiceSaldoEnEdicion = -1;
+      ultimaClaveSaldoDetectada = "";
+
+      if (resolucionDuplicadaBox) {
+        resolucionDuplicadaBox.classList.add("hidden");
+        resolucionDuplicadaBox.textContent = "";
+      }
+
+      if (saldoDuplicadoBox) {
+        saldoDuplicadoBox.classList.add("hidden");
+        saldoDuplicadoBox.textContent = "";
+      }
+
+      if (submitBtn) {
+        submitBtn.textContent = "Guardar registro";
+      }
+
+      if (limpiarMensaje) {
+        mensaje.className = "message";
+        mensaje.textContent = "";
+      }
+
+      if (limpiarResumen) {
+        ocultarResumenRegistro();
+      }
+    }
+
+    function descargarCSV() {
+      const registros = obtenerRegistros();
+
+      if (!registros.length) {
+        cambiarPagina("capturaPage");
+        mostrarMensaje("No hay registros locales para descargar.", "warn");
+        return;
+      }
+
+      const filas = [
+        HEADERS.join(";"),
+        ...registros.map(registro =>
+          HEADERS.map(header => csvCell(valorParaMostrar(header, registro[header]))).join(";")
+        )
+      ];
+
+      const csv = "\uFEFF" + filas.join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const fecha = new Date().toISOString().slice(0, 10);
+
+      link.href = url;
+      link.download = `registro_subsidios_${fecha}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function csvCell(valor) {
+      const texto = String(valor).replace(/"/g, '""');
+      return `"${texto}"`;
+    }
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+
+      try {
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        const registro = construirRegistro();
+        const registroMostrado = { ...registro };
+        let mensajeExito = "Registro guardado localmente";
+
+        if (accionSeleccionada === "saldos") {
+          const resultadoSaldo = buscarSaldoRegistrado(empresaSeleccionada, registro["Año"], registro["Mes"]);
+
+          if (resultadoSaldo.indice >= 0) {
+            registro.__operacion = "actualizar_saldo";
+            actualizarLocal(resultadoSaldo.indice, registro);
+            mensajeExito = "Saldo del mes actualizado localmente";
+          } else {
+            registro.__operacion = "crear_saldo";
+            guardarLocal(registro);
+          }
+        } else if (accionSeleccionada === "resolucion") {
+          const resultadoDuplicado = buscarResolucionRegistrada(empresaSeleccionada, registro["# de Resolución"]);
+
+          if (resultadoDuplicado.indice >= 0) {
+            registro.__operacion = "actualizar_resolucion";
+            actualizarLocal(resultadoDuplicado.indice, registro);
+            mensajeExito = "Resolución actualizada localmente";
+          } else {
+            registro.__operacion = "crear_resolucion";
+            guardarLocal(registro);
+          }
+        } else {
+          registro.__operacion = "crear_registro";
+          guardarLocal(registro);
+        }
+
+        actualizarVistas();
+        limpiarFormulario(true, false);
+        mostrarResumenRegistro(registroMostrado);
+
+        const resultado = await enviarCentral(registro);
+
+        if (resultado.enviado) {
+          mostrarMensaje(`${mensajeExito} y enviada al repositorio central.`, "ok");
+        } else {
+          mostrarMensaje(`${mensajeExito}. Falta configurar la URL de Apps Script para almacenamiento central.`, "warn");
+        }
+      } catch (error) {
+        mostrarMensaje(error.message || "No fue posible guardar el registro.", "error");
+      }
+    });
+
+    empresaGrid.addEventListener("click", event => {
+      const boton = event.target.closest("[data-company]");
+      if (!boton) return;
+      seleccionarEmpresa(boton.dataset.company);
+    });
+
+    tipoStepPanel.addEventListener("click", event => {
+      const boton = event.target.closest("[data-action]");
+      if (!boton) return;
+      seleccionarAccion(boton.dataset.action);
+    });
+
+    document.getElementById("numeroResolucion").addEventListener("input", () => revisarResolucionDuplicada(true));
+    document.getElementById("numeroResolucion").addEventListener("blur", () => revisarResolucionDuplicada(true));
+    anio.addEventListener("change", () => revisarSaldoDuplicado(true));
+    mes.addEventListener("change", () => revisarSaldoDuplicado(true));
+    nombreDiligenciadorInput.addEventListener("input", () => {
+      if (empresaMensaje.classList.contains("error") && nombreDiligenciadorInput.value.trim()) {
+        empresaMensaje.className = "message";
+        empresaMensaje.textContent = "";
+      }
+    });
+
+    document.getElementById("continuarEmpresaBtn").addEventListener("click", continuarConEmpresa);
+    nombreDiligenciadorInput.addEventListener("keydown", event => {
+      if (event.key === "Enter" && !responsablePosteriorBox.classList.contains("hidden")) {
+        event.preventDefault();
+        continuarConEmpresa();
+      }
+    });
+    document.getElementById("cambiarEmpresaBtn").addEventListener("click", reiniciarFlujo);
+    document.getElementById("volverTipoBtn").addEventListener("click", volverTipo);
+    document.getElementById("reiniciarFlujoBtn").addEventListener("click", reiniciarFlujo);
+    if (actualizarCentralBtn) actualizarCentralBtn.addEventListener("click", () => sincronizarDesdeGoogleSheets(false));
+    document.getElementById("csvBtn").addEventListener("click", descargarCSV);
+    document.getElementById("verRegistrosBtn").addEventListener("click", () => cambiarPagina("registrosPage"));
+    document.getElementById("volverCapturaBtn").addEventListener("click", () => cambiarPagina("capturaPage"));
+    document.getElementById("limpiarFiltrosEjecutivosBtn").addEventListener("click", limpiarFiltrosEjecutivos);
+    [filtroEmpresas, filtroAnios, filtroMeses].forEach(select => {
+      select.addEventListener("change", pintarVisualEjecutiva);
+    });
+
+    tabButtons.forEach(button => {
+      button.addEventListener("click", () => cambiarPagina(button.dataset.page));
+    });
+
+    configurarCampoPesos("saldo");
+    configurarCampoPesos("valorResolucion");
+    configurarCampoPesos("valorPago");
+    cargarOpciones();
+    cargarFiltrosEjecutivos();
+    pintarEncabezados();
+    pintarTabla();
+    pintarVisualEjecutiva();
+    mostrarPanel("empresa");
+    sincronizarDesdeGoogleSheets(true);
+  </script>
+</body>
+</html>
